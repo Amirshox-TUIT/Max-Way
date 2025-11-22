@@ -2,7 +2,7 @@ from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
 def db_keyboard(objects):
     rows = []
-    row = []
+    row = [KeyboardButton(text="⬅️ Ortga")]
     for obj in objects:
         row.append(KeyboardButton(text=obj.title))
         if len(row) == 2:

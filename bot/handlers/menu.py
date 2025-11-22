@@ -2,7 +2,6 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, FSInputFile
-from asgiref.sync import sync_to_async
 
 from bot.keyboards.builder import db_keyboard
 from bot.keyboards.contact_us import contact_us_keyboard
@@ -12,32 +11,11 @@ from bot.keyboards.location import location_keyboard
 from bot.keyboards.menu import menu_keyboard
 from bot.keyboards.regions import REGIONS, regions_keyboard
 from bot.keyboards.settings import settings_keyboard
-from bot.models import Branch, Categories, Product
 from bot.states.menu import MenuState
 from bot.states.to_order import OrderState
+from bot.sync_to_async.orders import *
 
 router = Router()
-
-@sync_to_async
-def get_all_branches():
-    return list(Branch.objects.all())
-
-@sync_to_async
-def get_branch_by_title(title):
-    return Branch.objects.filter(title=title).first()
-
-@sync_to_async
-def get_all_categories():
-    return list(Categories.objects.all())
-
-@sync_to_async
-def get_products_by_category(category_title):
-    return list(Product.objects.filter(category__title=category_title))
-
-@sync_to_async
-def get_product_by_title(title):
-    return Product.objects.filter(title=title).first()
-
 
 @router.message(Command(commands=["start"]))
 async def start(message: Message, state: FSMContext):
@@ -87,6 +65,11 @@ async def menu(message: Message, state: FSMContext):
 
 @router.message(MenuState.to_order)
 async def to_order(message: Message, state: FSMContext):
+    if message.text == "⬅️ Ortga":
+        await state.set_state(MenuState.menu)
+        await message.answer(text="Bosh menyu", reply_markup=menu_keyboard())
+        return
+
     if message.text == "🏃 Olib ketish":
         await state.set_state(OrderState.delivery_type)
         await message.answer(text="Qayerdasiz 👀? Agar lokatsiyangizni📍 yuborsangiz, "
@@ -110,6 +93,14 @@ async def delivery_type(message: Message, state: FSMContext):
 
 @router.message(OrderState.branches)
 async def branches(message: Message, state: FSMContext):
+    if message.text == "⬅️ Ortga":
+        await state.set_state(OrderState.delivery_type)
+        await message.answer(text="Qayerdasiz 👀? Agar lokatsiyangizni📍 yuborsangiz, "
+                                  "sizga eng yaqin filialni aniqlaymiz",
+                             reply_markup=location_keyboard()
+                             )
+        return
+
     await state.set_state(OrderState.categories)
     branch = await get_branch_by_title(message.text)
     if not branch:
@@ -126,9 +117,14 @@ async def branches(message: Message, state: FSMContext):
 
 @router.message(OrderState.categories)
 async def categories(message: Message, state: FSMContext):
+    if message.text == "⬅️ Ortga":
+        await state.set_state(OrderState.branches)
+        await message.answer(text="Qaysi filialdan olib ketishni tanlang",
+                             reply_markup=db_keyboard(branches))
+        return
+
     await state.set_state(OrderState.products)
     products = await get_products_by_category(message.text)
-
     if not products:
         await message.answer("Bu kategoriyada mahsulotlar topilmadi")
         return
@@ -137,6 +133,12 @@ async def categories(message: Message, state: FSMContext):
 
 @router.message(OrderState.products)
 async def products(message: Message, state: FSMContext):
+    if message.text == "⬅️ Ortga":
+        await state.set_state(OrderState.categories)
+        categories = await get_all_categories()
+        await message.answer(text="Nimadan boshlaymiz?", reply_markup=db_keyboard(categories))
+        return
+
     product = await sync_to_async(Product.objects.filter(title=message.text).first)()
     if not product:
         await message.answer("Mahsulot topilmadi")
@@ -163,8 +165,3 @@ async def products(message: Message, state: FSMContext):
                  f"{product.description}\n\n"
                  f"💰 Narxi: {product.price:,} so'm"
         )
-
-@router.message(F.text == "⬅️ Ortga")
-async def back(message: Message, state: FSMContext):
-    await state.set_state(MenuState.menu)
-    await message.answer(text="Bosh menyu", reply_markup=menu_keyboard())
