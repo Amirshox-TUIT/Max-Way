@@ -1,10 +1,16 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
+from django.utils.translation import gettext as _, activate
 
-def db_keyboard(objects):
+
+def db_keyboard(objects, language_code="uz"):
+    activate(language_code)
     rows = []
     row = [KeyboardButton(text="⬅️ Ortga")]
     for obj in objects:
-        row.append(KeyboardButton(text=obj.title))
+        if hasattr(obj, 'title'):
+            row.append(KeyboardButton(text=obj.title))
+        else:
+            row.append(KeyboardButton(text=obj.name))
         if len(row) == 2:
             rows.append(row)
             row = []

@@ -1,12 +1,13 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
+from django.utils.translation import gettext as _
 
 MENU = [
-    "🛍 Buyurtma berish",
-    "📖 Buyurtmalar tarixi",
-    "⚙️Sozlash ℹ️ Ma'lumotlar",
-    "🔥 Aksiya",
-    "🙋🏻‍♂️ Jamoamizga qo'shiling",
-    "🙋☎️ Les Ailes bilan aloqa"
+    _("🛍 Buyurtma berish"),
+    _("📖 Buyurtmalar tarixi"),
+    _("⚙️Sozlash ℹ️ Ma'lumotlar"),
+    _("🔥 Aksiya"),
+    _("🙋🏻‍♂️ Jamoamizga qo'shiling"),
+    _("🙋☎️ Les Ailes bilan aloqa")
 ]
 
 def menu_keyboard():

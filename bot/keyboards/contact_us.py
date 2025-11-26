@@ -1,7 +1,8 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from django.utils.translation import gettext as _
 
 CONTACT_US = [
-    "💬 Biz bilan aloqaga chiqing",
+    _("💬 Biz bilan aloqaga chiqing"),
     "✍️ Fikr bildirish"
 ]
 

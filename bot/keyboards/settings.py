@@ -1,12 +1,13 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
+from django.utils.translation import gettext as _
 
 SETTINGS = [
-    "Ismni o'zgartirish",
-    "Raqamni o'zgartirish",
-    "Shaharni o'zgartirish",
-    "Tilni o'zgartirish",
-    "Filallar haqida ma'lumotlar",
-    "Ommaviy taklif"
+    _("Ismni o'zgartirish"),
+    _("Raqamni o'zgartirish"),
+    _("Shaharni o'zgartirish"),
+    _("Tilni o'zgartirish"),
+    _("Filallar haqida ma'lumotlar"),
+    _("Ommaviy taklif")
 ]
 
 def settings_keyboard():

@@ -1,8 +1,9 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from django.utils.translation import gettext as _
 
 DElIVERY_TYPE = [
-    "🏃 Olib ketish",
-    "🚙 Yetkazib berish"
+    _("🏃 Olib ketish"),
+    _("🚙 Yetkazib berish")
 ]
 
 def delivery_keyboard():
