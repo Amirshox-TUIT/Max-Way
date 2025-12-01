@@ -1,15 +1,17 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, activate
 
-CONTACT_US = [
-    _("💬 Biz bilan aloqaga chiqing"),
-    "✍️ Fikr bildirish"
-]
 
-contact_us_keyboard = ReplyKeyboardMarkup(
+def contact_us_keyboard(language_code="uz"):
+    activate(language_code)
+    CONTACT_US = [
+        "💬 " + _("Biz bilan aloqaga chiqing"),
+        "✍️ " + _("Fikr bildirish")
+    ]
+    return ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text=CONTACT_US[0]), KeyboardButton(text=CONTACT_US[1])],
-        [KeyboardButton(text="⬅️ Ortga")]
+        [KeyboardButton(text="⬅️ " + _("Ortga"))]
     ],
     resize_keyboard=True,
     one_time_keyboard=True,

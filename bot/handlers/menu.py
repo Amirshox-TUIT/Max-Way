@@ -41,14 +41,14 @@ Hello! Welcome to Les Ailes delivery service.
 """
         await message.answer(
             welcome_text,
-            reply_markup=await get_language_keyboard()
+            reply_markup=get_language_keyboard()
         )
     else:
         await state.set_state(MenuState.region)
         language_code = await get_user_language(user_id=user.id)
         activate(language_code)
         regions = await get_all_regions()
-        text = _("Bosh menyuga xush kelibsiz 😊")
+        text = _(f"Qaysi shaharda yashaysiz?\nIltimos, shaharni tanlang:")
         await message.answer(
             text,
             reply_markup=db_keyboard(regions, language_code)
@@ -75,42 +75,45 @@ async def change_language(callback: CallbackQuery, state: FSMContext):
 
 @router.message(MenuState.region)
 async def region(message: Message, state: FSMContext):
+    language_code = await get_user_language(user_id=message.from_user.id)
     await state.set_state(MenuState.menu)
-    await message.answer(text=_("Bosh menyu"), reply_markup=menu_keyboard())
+    await message.answer(text=_("Bosh menyu"), reply_markup=menu_keyboard(language_code))
 
 
 @router.message(MenuState.menu)
 async def menu(message: Message, state: FSMContext):
+    language_code = await get_user_language(user_id=message.from_user.id)
     match message.text:
-        case "🛍 Buyurtma berish" | "🛒 Make an order":
+        case "🛍 Buyurtma berish" | "🛍 Place order":
             await state.set_state(MenuState.to_order)
-            await message.answer(text=_("Buyurtmani o'zingiz 🙋‍♂️ olib keting yoki Yetkazib berishni 🚙 tanlang"),
-                                 reply_markup=delivery_keyboard())
+            await message.answer(text=_("Buyurtmani o'zingiz") + " 🙋‍♂️ " +
+                                      _("olib keting yoki Yetkazib berishni") + " 🚙 " + _("tanlang"),
+                                 reply_markup=delivery_keyboard(language_code))
 
         case "📖 Buyurtmalar tarixi" | "📖 Order history":
             await message.answer(text=_("Sizning buyurtmalaringiz yo'q"))
             return
 
-        case "⚙️Sozlash ℹ️ Ma'lumotlar" | "⚙️ Settings ℹ️ Information":
+        case "⚙️Sozlash ℹ️ Ma'lumotlar" | "⚙️Settings ℹ️ Information":
             await state.set_state(MenuState.settings)
-            await message.answer(text=_("Harakatni tanlang:"), reply_markup=settings_keyboard())
+            await message.answer(text=_("Harakatni tanlang:"), reply_markup=settings_keyboard(language_code))
 
-        case "🔥 Aksiya" | "🔥 Promotions":
+        case "🔥 Aksiya" | "🔥 Promotion":
             await state.set_state(MenuState.sales)
             await message.answer(text=_("Shahringizda hali aksiyalar mavjud emas"))
 
-        case "🙋🏻‍♂️ Jamoamizga qo'shiling" | "🙋‍♂️ Join our team":
+        case "🙋🏻‍♂️ Jamoamizga qo'shiling" | "‍🙋🏻‍♂️ Join our team":
             await state.set_state(MenuState.join_us)
             await message.answer(
                 text=_("Ahil jamoamizda ishlashga taklif qilamiz! Telegramdan chiqmay, "
                        "shu yerning o'zida anketani to'ldirish uchun quyidagi tugmani bosing."),
-                reply_markup=join_us_inline_keyboard)
+                reply_markup=join_us_inline_keyboard(language_code))
 
-        case "🙋☎️ Les Ailes bilan aloqa" | "📞 Contact Les Ailes":
+        case "🙋☎️ Les Ailes bilan aloqa" | "🙋☎️ Contact Les Ailes":
             await state.set_state(MenuState.contact_us)
             await message.answer(
                 text=_("Agar siz bizga yozsangiz yoki sharh qoldirmoqchi bo'lsangiz, xursand bo'lamiz."),
-                reply_markup=contact_us_keyboard)
+                reply_markup=contact_us_keyboard(language_code))
 
         case _:
             await state.set_state(MenuState.menu)
@@ -118,29 +121,31 @@ async def menu(message: Message, state: FSMContext):
 
 @router.message(MenuState.to_order)
 async def to_order(message: Message, state: FSMContext):
-    if message.text == "⬅️ Ortga":
+    language_code = await get_user_language(user_id=message.from_user.id)
+    if message.text == "⬅️ Ortga" or message.text == "⬅️ Back":
         await state.set_state(MenuState.menu)
-        await message.answer(text=_("Bosh menyu"), reply_markup=menu_keyboard())
+        await message.answer(text=_("Bosh menyu"), reply_markup=menu_keyboard(language_code))
         return
 
     if message.text == "🏃 Olib ketish" or message.text == "🏃 Pickup":
         await state.set_state(OrderState.delivery_type)
-        await message.answer(text=_("Qayerdasiz 👀? Agar lokatsiyangizni📍 yuborsangiz, "
-                                    "sizga eng yaqin filialni aniqlaymiz"),
-                             reply_markup=location_keyboard()
+        await message.answer(text=_("Qayerdasiz") + " 👀" + _("? Agar lokatsiyangizni") + "📍" +
+                                  _("yuborsangiz, sizga eng yaqin filialni aniqlaymiz"),
+                             reply_markup=location_keyboard(language_code)
                              )
-
 
 @router.message(OrderState.delivery_type)
 async def delivery_type(message: Message, state: FSMContext):
-    if message.text == "⬅️ Ortga":
+    language_code = await get_user_language(user_id=message.from_user.id)
+    if message.text == "⬅️ Ortga" or message.text == "⬅️ Back":
         await state.set_state(MenuState.to_order)
-        await message.answer(text=_("Buyurtmani o'zingiz 🙋‍♂️ olib keting yoki Yetkazib berishni 🚙 tanlang"),
-                             reply_markup=delivery_keyboard())
+        await message.answer(text=_("Buyurtmani o'zingiz") + " 🙋‍♂️ " +
+                                  _("olib keting yoki Yetkazib berishni") + " 🚙 " + _("tanlang"),
+                             reply_markup=delivery_keyboard(language_code))
         return
 
-    if "Filialni tanlang" in message.text or "Select a branch" in message.text:
-        language_code = get_user_language(message.from_user.id)
+    if "Filialni tanlang" in message.text or "Select branch" in message.text:
+        language_code = await get_user_language(message.from_user.id)
         branches = await get_all_branches()
         await state.set_state(OrderState.branches)
         await message.answer(text=_("Qaysi filialdan olib ketishni tanlang"),
@@ -149,11 +154,12 @@ async def delivery_type(message: Message, state: FSMContext):
 
 @router.message(OrderState.branches)
 async def branches(message: Message, state: FSMContext):
-    if message.text == "⬅️ Ortga":
+    language_code = await get_user_language(message.from_user.id)
+    if message.text == "⬅️ Ortga" or message.text == "⬅️ Back":
         await state.set_state(OrderState.delivery_type)
-        await message.answer(text=_("Qayerdasiz 👀? Agar lokatsiyangizni📍 yuborsangiz, "
-                                    "sizga eng yaqin filialni aniqlaymiz"),
-                             reply_markup=location_keyboard()
+        await message.answer(text=_("Qayerdasiz") + " 👀" + _("? Agar lokatsiyangizni") + "📍" +
+                                  _("yuborsangiz, sizga eng yaqin filialni aniqlaymiz"),
+                             reply_markup=location_keyboard(language_code)
                              )
         return
 
@@ -163,7 +169,6 @@ async def branches(message: Message, state: FSMContext):
         await message.answer(_("Filial topilmadi. Iltimos, qaytadan tanlang."))
         return
 
-    language_code = get_user_language(message.from_user.id)
     categories = await get_all_categories()
     location = _("Manzil")
     target = _("Mo'ljal")
@@ -178,8 +183,8 @@ async def branches(message: Message, state: FSMContext):
 
 @router.message(OrderState.categories)
 async def categories(message: Message, state: FSMContext):
-    language_code = get_user_language(message.from_user.id)
-    if message.text == "⬅️ Ortga":
+    language_code = await get_user_language(message.from_user.id)
+    if message.text == "⬅️ Ortga" or message.text == "⬅️ Back":
         await state.set_state(OrderState.branches)
         await message.answer(text=_("Qaysi filialdan olib ketishni tanlang"),
                              reply_markup=db_keyboard(branches, language_code))
@@ -195,20 +200,20 @@ async def categories(message: Message, state: FSMContext):
 
 @router.message(OrderState.products)
 async def products(message: Message, state: FSMContext):
-    language_code = get_user_language(message.from_user.id)
-    if message.text == "⬅️ Ortga":
+    language_code = await get_user_language(message.from_user.id)
+    if message.text == "⬅️ Ortga" or message.text == "⬅️ Back":
         await state.set_state(OrderState.categories)
         categories = await get_all_categories()
         await message.answer(text=_("Nimadan boshlaymiz?"),
                              reply_markup=db_keyboard(categories, language_code))
         return
 
-    product = await sync_to_async(Product.objects.filter(title=message.text).first)()
+    product = await get_product_by_title(message.text)
     if not product:
         await message.answer(_("Mahsulot topilmadi"))
         return
 
-    price = _("💰 Narxi")
+    price = _("Narxi")
     try:
         if product.image:
             photo = FSInputFile(product.image.path)
@@ -216,17 +221,17 @@ async def products(message: Message, state: FSMContext):
                 photo=photo,
                 caption=f"📦 {product.title}\n\n"
                         f"{product.description}\n\n"
-                        f"{price}: {product.price:,} so'm"
+                        f"💰 {price}: {product.price:,} so'm"
             )
         else:
             await message.answer(
                 text=f"📦 {product.title}\n\n"
                      f"{product.description}\n\n"
-                     f"{price}: {product.price:,} so'm"
+                     f"💰 {price}: {product.price:,} so'm"
             )
     except Exception as e:
         await message.answer(
             text=f"📦 {product.title}\n\n"
                  f"{product.description}\n\n"
-                 f"{price}: {product.price:,} so'm"
+                 f"💰 {price}: {product.price:,} so'm"
         )

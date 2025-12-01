@@ -11,7 +11,7 @@ def get_user_language(user_id):
         user = TelegramUser.objects.get(user_id=user_id)
         return user.language_code
     except TelegramUser.DoesNotExist:
-        return settings.LANGUAGE_CODE
+        return 'en'
 
 
 @sync_to_async

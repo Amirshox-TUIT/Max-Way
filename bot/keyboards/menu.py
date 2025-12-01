@@ -1,16 +1,16 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, activate
 
-MENU = [
-    _("🛍 Buyurtma berish"),
-    _("📖 Buyurtmalar tarixi"),
-    _("⚙️Sozlash ℹ️ Ma'lumotlar"),
-    _("🔥 Aksiya"),
-    _("🙋🏻‍♂️ Jamoamizga qo'shiling"),
-    _("🙋☎️ Les Ailes bilan aloqa")
-]
-
-def menu_keyboard():
+def menu_keyboard(language_code="uz"):
+    activate(language_code)
+    MENU = [
+        "🛍 " + _("Buyurtma berish"),
+        "📖 " + _("Buyurtmalar tarixi"),
+        "⚙️" + _("Sozlash") + " ℹ️" + _(" Ma'lumotlar"),
+        "🔥 " + _("Aksiya"),
+        "🙋🏻‍♂️ " + _("Jamoamizga qo'shiling"),
+        "🙋☎️ " + _("Les Ailes bilan aloqa")
+    ]
     rows = []
     row = []
     for index, menu_item in enumerate(MENU):

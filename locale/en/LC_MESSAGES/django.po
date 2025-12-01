@@ -1,0 +1,205 @@
+#: .\bot\handlers\menu.py:51
+msgid ""
+"Qaysi shaharda yashaysiz?\n"
+"Iltimos, shaharni tanlang:"
+msgstr ""
+"In which city do you live?\n"
+"Please select a city:"
+
+#: .\bot\handlers\menu.py:71
+msgid ""
+"Assalomu alaykum! Les Ailes yetkazib berish xizmatiga xush kelibsiz.\n"
+"Qaysi shaharda yashaysiz?\n"
+" Iltimos, shaharni tanlang:"
+msgstr ""
+"Hello! Welcome to Les Ailes delivery service.\n"
+"In which city do you live?\n"
+" Please select a city:"
+
+#: .\bot\handlers\menu.py:79 .\bot\handlers\menu.py:124
+msgid "Bosh menyu"
+msgstr "Main menu"
+
+#: .\bot\handlers\menu.py:87 .\bot\handlers\menu.py:139
+msgid "Buyurtmani o'zingiz"
+msgstr "Order by yourself"
+
+#: .\bot\handlers\menu.py:88 .\bot\handlers\menu.py:140
+msgid "olib keting yoki Yetkazib berishni"
+msgstr "Pick up or Delivery"
+
+#: .\bot\handlers\menu.py:88 .\bot\handlers\menu.py:140
+msgid "tanlang"
+msgstr "choose"
+
+#: .\bot\handlers\menu.py:92
+msgid "Sizning buyurtmalaringiz yo'q"
+msgstr "You have no orders"
+
+#: .\bot\handlers\menu.py:97
+msgid "Harakatni tanlang:"
+msgstr "Choose an action:"
+
+#: .\bot\handlers\menu.py:101
+msgid "Shahringizda hali aksiyalar mavjud emas"
+msgstr "No promotions are available in your city yet"
+
+#: .\bot\handlers\menu.py:106
+msgid ""
+"Ahil jamoamizda ishlashga taklif qilamiz! Telegramdan chiqmay, shu yerning "
+"o'zida anketani to'ldirish uchun quyidagi tugmani bosing."
+msgstr ""
+"We invite you to join our friendly team! Fill out the form right here without leaving Telegram by clicking the button below."
+
+#: .\bot\handlers\menu.py:113
+msgid ""
+"Agar siz bizga yozsangiz yoki sharh qoldirmoqchi bo'lsangiz, xursand "
+"bo'lamiz."
+msgstr ""
+"We will be happy if you write to us or leave a comment."
+
+#: .\bot\handlers\menu.py:129 .\bot\handlers\menu.py:156
+msgid "Qayerdasiz"
+msgstr "Where are you"
+
+#: .\bot\handlers\menu.py:129 .\bot\handlers\menu.py:156
+msgid "? Agar lokatsiyangizni"
+msgstr "? If you send your location"
+
+#: .\bot\handlers\menu.py:130 .\bot\handlers\menu.py:157
+msgid "yuborsangiz, sizga eng yaqin filialni aniqlaymiz"
+msgstr "we will find the nearest branch for you"
+
+#: .\bot\handlers\menu.py:148 .\bot\handlers\menu.py:186
+msgid "Qaysi filialdan olib ketishni tanlang"
+msgstr "Select a branch for pickup"
+
+#: .\bot\handlers\menu.py:165
+msgid "Filial topilmadi. Iltimos, qaytadan tanlang."
+msgstr "Branch not found. Please select again."
+
+#: .\bot\handlers\menu.py:170
+msgid "Manzil"
+msgstr "Address"
+
+#: .\bot\handlers\menu.py:171
+msgid "Mo'ljal"
+msgstr "Landmark"
+
+#: .\bot\handlers\menu.py:172
+msgid "Ish vaqti"
+msgstr "Working hours"
+
+#: .\bot\handlers\menu.py:178 .\bot\handlers\menu.py:195
+#: .\bot\handlers\menu.py:204
+msgid "Nimadan boshlaymiz?"
+msgstr "Where shall we start?"
+
+#: .\bot\handlers\menu.py:193
+msgid "Bu kategoriyada mahsulotlar topilmadi"
+msgstr "No products found in this category"
+
+#: .\bot\handlers\menu.py:210
+msgid "Mahsulot topilmadi"
+msgstr "Product not found"
+
+#: .\bot\handlers\menu.py:213
+msgid "Narxi"
+msgstr "Price"
+
+#: .\bot\keyboards\contact_us.py:5
+msgid "Biz bilan aloqaga chiqing"
+msgstr "Contact us"
+
+#: .\bot\keyboards\contact_us.py:6
+msgid "Fikr bildirish"
+msgstr "Give feedback"
+
+#: .\bot\keyboards\contact_us.py:12 .\bot\keyboards\delivery_type.py:13
+#: .\bot\keyboards\location.py:13 .\bot\keyboards\settings.py:22
+msgid "Ortga"
+msgstr "Back"
+
+#: .\bot\keyboards\delivery_type.py:5
+msgid "Olib ketish"
+msgstr "Pickup"
+
+#: .\bot\keyboards\delivery_type.py:6
+msgid "Yetkazib berish"
+msgstr "Delivery"
+
+#: .\bot\keyboards\join_us.py:6
+msgid "O'tish"
+msgstr "Proceed"
+
+#: .\bot\keyboards\location.py:8
+msgid "Bu yerda buyurtma berish"
+msgstr "Order here"
+
+#: .\bot\keyboards\location.py:9
+msgid "Filialni tanlang"
+msgstr "Select branch"
+
+#: .\bot\keyboards\location.py:12
+msgid "Eng yaqin filialni aniqlash"
+msgstr "Find nearest branch"
+
+#: .\bot\keyboards\menu.py:5
+msgid "Buyurtma berish"
+msgstr "Place order"
+
+#: .\bot\keyboards\menu.py:6
+msgid "Buyurtmalar tarixi"
+msgstr "Order history"
+
+#: .\bot\keyboards\menu.py:7
+msgid "Sozlash"
+msgstr "Settings"
+
+#: .\bot\keyboards\menu.py:7
+msgid " Ma'lumotlar"
+msgstr " Information"
+
+#: .\bot\keyboards\menu.py:8
+msgid "Aksiya"
+msgstr "Promotion"
+
+#: .\bot\keyboards\menu.py:9
+msgid "Jamoamizga qo'shiling"
+msgstr "Join our team"
+
+#: .\bot\keyboards\menu.py:10
+msgid "Les Ailes bilan aloqa"
+msgstr "Contact Les Ailes"
+
+#: .\bot\keyboards\settings.py:5
+msgid "Ismni o'zgartirish"
+msgstr "Change name"
+
+#: .\bot\keyboards\settings.py:6
+msgid "Raqamni o'zgartirish"
+msgstr "Change phone number"
+
+#: .\bot\keyboards\settings.py:7
+msgid "Shaharni o'zgartirish"
+msgstr "Change city"
+
+#: .\bot\keyboards\settings.py:8
+msgid "Tilni o'zgartirish"
+msgstr "Change language"
+
+#: .\bot\keyboards\settings.py:9
+msgid "Filallar haqida ma'lumotlar"
+msgstr "Branch information"
+
+#: .\bot\keyboards\settings.py:10
+msgid "Ommaviy taklif"
+msgstr "Mass offer"
+
+#: .\bot\models.py:79
+msgid "shahar"
+msgstr "city"
+
+#: .\bot\models.py:80
+msgid "shaharlar"
+msgstr "cities"

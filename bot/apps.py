@@ -28,6 +28,7 @@ class BotConfig(AppConfig):
             BotConfig.dp.message.middleware(TranslationMiddleware())
             BotConfig.dp.callback_query.middleware(TranslationMiddleware())
 
+            # Register handlers
             from bot.handlers import menu
             BotConfig.dp.include_router(menu.router)
 

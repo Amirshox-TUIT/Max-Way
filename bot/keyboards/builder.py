@@ -5,7 +5,7 @@ from django.utils.translation import gettext as _, activate
 def db_keyboard(objects, language_code="uz"):
     activate(language_code)
     rows = []
-    row = [KeyboardButton(text="⬅️ Ortga")]
+    row = [KeyboardButton(text="⬅️ " +  _("Ortga"))]
     for obj in objects:
         if hasattr(obj, 'title'):
             row.append(KeyboardButton(text=obj.title))
